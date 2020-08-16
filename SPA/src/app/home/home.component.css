@@ -1,0 +1,21 @@
+
+  .container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .homme {
+    margin: auto;
+    margin-bottom: 0;
+    margin-top: 5%;
+  }
+
+  .homme2 {
+    margin: auto;
+    margin-bottom: 0;
+  }
+
+  .mat-primary, .mat-accent {
+    height: 50px;
+  }

@@ -1,0 +1,46 @@
+<div *ngIf="!loggedIn()" class="container">
+
+  <img class="homme2" src="../../assets/home1.png" width="200px" alt="">
+
+  <div class="mt-3" *ngIf="!registerMode" style="text-align: center">
+    <h1>Find your match</h1>
+    <p class="lead">Come on in to view your matches... All you need to do is sign up!</p>
+    <div class="text-center">
+      <button mat-flat-button color="primary" (click)="registerToggle()">Register</button> &nbsp;
+      <a routerLink='/about'><button mat-flat-button color="accent" >Learn more</button> </a>
+    </div>
+  </div>
+
+    <div class="row justify-content-center mt-4">
+      <div *ngIf="registerMode" class="col-4">
+        <app-register (cancelRegister)="cancelRegisterMode($event)"></app-register>
+
+      </div>
+    </div>
+
+</div>
+
+<!-- Logged Users -->
+<div *ngIf="loggedIn()" class="container">
+
+  <img class="homme" src="../../assets/home2.png" width="200px" alt="">
+
+  <div class="mt-3" style="text-align: center">
+    <h1>Welcome {{authService.decodedToken?.unique_name | titlecase}}</h1>
+    <p class="lead">Come on to view your new matches... Don't forget to open your new messages !</p>
+    <div class="text-center">
+      <button mat-flat-button color="primary" [routerLink]="['/messages']">Messages</button> &nbsp;
+      <button mat-flat-button color="accent" [routerLink]="['/members']">Matches</button>
+    </div>
+  </div>
+
+
+</div>
+
+<!-- Footer -->
+<footer class="page-footer mt-5">
+  <div class="footer-copyright text-center"> <br>
+    © 2020 COPYRIGHT :
+    <a> EVILSPARTANS</a>
+  </div>
+</footer>

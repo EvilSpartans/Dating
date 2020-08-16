@@ -1,0 +1,94 @@
+
+
+<!-- Toolbar -->
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav style="background-color: #3f51b5;" #drawer class="sidenav" fixedInViewport
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false">
+    <mat-toolbar>      <img
+      width="60"
+      alt="Angular Logo"
+      src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
+    />Dating App</mat-toolbar>
+    <mat-nav-list>
+      <a  *ngIf="loggedIn()" routerLink="/members"><button style="margin-bottom: 5%;" mat-button class="mat-button"><mat-icon>perm_media</mat-icon>&nbsp;
+        <mat-label style="color: white;">MATCHES</mat-label></button></a>
+      <a    *ngIf="loggedIn()" routerLink="/lists"><button style="margin-bottom: 5%;" mat-button class="mat-button"><mat-icon>note_add</mat-icon>&nbsp;
+          <mat-label style="color: white;">LISTS</mat-label></button></a>
+      <a   *ngIf="loggedIn()" routerLink="/messages"><button style="margin-bottom: 5%;" mat-button class="mat-button"><mat-icon>note_add</mat-icon>&nbsp;
+            <mat-label style="color: white;">MESSAGES</mat-label></button></a>
+      <a *ngIf="!loggedIn()" routerLink="/about"><div class="disp"><button style="margin-bottom: 5%;" mat-button class="mat-button"><mat-icon>feedback</mat-icon>&nbsp;
+              <mat-label style="color: white;">ABOUT</mat-label></button></div></a>
+
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+           <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+
+    <a routerLink="/"><div class="disp"><button mat-button class="mat-button"><mat-icon>home</mat-icon>&nbsp;
+      <mat-label>HOME</mat-label></button></div></a>
+
+      <a *ngIf="loggedIn()" routerLink="/about"><div class="disp"><button mat-button class="mat-button"><mat-icon>feedback</mat-icon>&nbsp;
+        <mat-label>ABOUT</mat-label></button></div></a>
+
+       <a *appHasRole="['Admin', 'Moderator']" routerLink="/admin"><div class="disp"><button mat-button class="mat-button"><mat-icon>lock</mat-icon>&nbsp;
+          <mat-label>ADMIN</mat-label></button></div></a>
+
+
+    <span class="example-spacer"></span>
+
+    <form *ngIf="!loggedIn()" #loginForm="ngForm" class="form-inline my-2 my-lg-0" (ngSubmit)="login()">
+      <input class="form-control mr-sm-2" type="text" name="username" placeholder="Username" [(ngModel)]="model.username" required>
+      <input class="form-control mr-sm-2" type="password" name="password" placeholder="Password" [(ngModel)]="model.password" required>
+      <button style="color: white;" [disabled]="!loginForm.valid" class="btn  my-2 my-sm-0" type="submit">Login</button>
+    </form>
+
+    <div *ngIf="loggedIn()" class="dropdown" dropdown>
+      <span class="mr-1">
+        <!-- <img class="avatar" src="{{photoUrl || '../assets/user.png'}}" alt=""> -->
+      </span>
+  </div>
+
+      <button  *ngIf="loggedIn()" class="custom-btn" mat-button [matMenuTriggerFor]="menu">
+        <!-- <mat-icon>account_circle</mat-icon> -->
+        <img class="avatar" src="{{photoUrl || '../assets/user.png'}}" alt="">
+        &nbsp;
+         <mat-label> {{authService.decodedToken?.unique_name | titlecase}}</mat-label>
+      </button>
+      <mat-menu  #menu="matMenu">
+        <button class="custom-btn" mat-menu-item routerLink="/member/edit">PROFILE</button>
+        <!-- <button class="custom-btn" mat-menu-item routerLink="/admin">ADMIN</button> -->
+        <button class="custom-btn" mat-menu-item (click)="logout()" >SIGN OUT</button>
+      </mat-menu>
+
+  </mat-toolbar>
+
+<!-- Content -->
+<div class="content" role="main">
+
+<!-- <div class="all"> -->
+
+<div [@routeAnimations]="prepareRoute(outlet)" >
+  <router-outlet #outlet="outlet"></router-outlet>
+</div>
+
+</div>
+
+<!-- </div> -->
+
+
+</mat-sidenav-content>
+</mat-sidenav-container>
+
+
+
+
